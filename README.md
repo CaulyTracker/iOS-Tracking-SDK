@@ -87,6 +87,12 @@ libCaulyTracker.so
 ```
 
 ### Cauly Tracker 초기화
+| Method | mandatory | Description |
+| --------- | ------------- | ------------- |
+| setUserId | optional | 각 서비스를 사용하는 사용자의 고유 ID |
+| setAge | optional | 사용자의 연령<br>연령 정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
+| setGender | optional | 사용자의 성별<br>성별 정보를 추가하면 더욱 세밀한 분석이 가능합니다. |
+
 ```objectivec
 #import "CaulyTracker.h"
 
@@ -97,7 +103,7 @@ libCaulyTracker.so
 
 	[CaulyTracker setAge:@"20"];
 	[CaulyTracker setGender:CaulyGender_Male];
-	[CaulyTracker setUserId:@"neilTestUserId_20151201"];
+	[CaulyTracker setUserId:@"TestUserId_20151201"];
 	...
 }
 ```
