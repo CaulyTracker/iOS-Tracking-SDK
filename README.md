@@ -17,23 +17,23 @@ CAULY Tracking iOS SDK
 ### Table of contents
 
 - CAULY Tracking iOS SDK
-	- 연동 절차
- 	- SDK 적용
-	  	- Xcode Project Setting
+	- [연동 절차](#연동-절차)
+ 	- [SDK 적용](#sdk-적용)
+	  	- [Xcode Project Setting](#xcode-project-setting)
 	   		- info.plist
 			- Static Library Import
 	   		- Depedency
-	  	- Cauly Tracker 초기화
-	  	- Webview를 사용하는 Hybrid App 참고사항
-	  	- Install check
-	  	- Session Start / Close
+	  	- [Cauly Tracker 초기화](#cauly-tracker-초기화)
+	  	- [Webview를 사용하는 Hybrid App 참고사항](#webview를-사용하는-hybrid-app-참고사항)
+	  	- [Install check](#install-check)
+	  	- [Session Start / Close](#session-start--close)
 	  		- Sample
-	  	- Event
+	  	- [Event](#event)
 	   		- Custom Event
 	    			- Name Only
 	    			- name / single param
 	    			- name / given parameters
- 	- Cauly JS Interface For UIWebview
+ 	- [Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview)
   		- Inject javascript interface
   		- Get Platform String
    			- sample
@@ -154,7 +154,7 @@ Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 �
 | event_param | optional | 세부 정보 등 이벤트에 추가적으로 기입할 값 |
 
 
-##### Name Only 
+##### Name Only
 ``` [CaulyTracker trackEvent:@"SAMPLE_EVENT_1"]; ``` 
 
 ##### name / single param
@@ -172,9 +172,9 @@ caulyTrackerEvent.param4 = @"param4_value";
 
 --------------
 
-Cauly JS Interface For UIWebview 
+Cauly JS Interface For UIWebview
 ---------------------------------
-### Inject javascript interface 
+### Inject javascript interface
 WebView 의 Load가 끝나는 시점에 JavaScript Interface 를 등록합니다.
 ```
 #pragma mark - UIWebViewDelegate
