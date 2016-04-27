@@ -37,8 +37,8 @@ Cauly 리타겟팅 iOS 연동 가이드
 
 #### DeepLink 처리
 ```objc
-// 아래 String 처럼 DeekLink 가 들어왔다고 가정하면
-// NSString deepLinkStr = @"someapp://app/?cauly_rt_code=1234&cauly_egmt_sec=8600"; 
+// 아래 NSURL 로 DeekLink 가 들어오면 
+// NSURL *deepLinkStr; // example) "someapp://app/?cauly_rt_code=1234&cauly_egmt_sec=8600"; 
 [CaulyTracker traceDeepLink:deepLinkStr];
 ```
 
