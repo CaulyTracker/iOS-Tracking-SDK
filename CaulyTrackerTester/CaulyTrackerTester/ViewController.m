@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "CaulyTracker.h"
+#import "Product.h"
 #import "PurchaseEvent.h"
 #import "CaulyTrackerEvent.h"
 #import "WebTestViewController.h"
@@ -24,6 +25,7 @@
     [CaulyTracker setAge:@"20"];
     [CaulyTracker setGender:CaulyGender_Male];
     [CaulyTracker setUserId:@"neilTestUserId_20151201"];
+    
     // Do any additional setup after loading the view, typically from a nib.
     
     currencyArray=[[NSArray alloc] initWithObjects:CURRENCY_USD,CURRENCY_THB,CURRENCY_KRW, CURRENCY_JPY, CURRENCY_CNY,nil];
@@ -137,26 +139,36 @@
         
         PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
         
-        purchaseEvent.productName = _purchaseProductName.text;
+        purchaseEvent.orderId = _orderId.text;
         
         @try{
-            purchaseEvent.unitPrice = _purchaseUnitPrice.text;
+            purchaseEvent.orderPrice = _orderPrice.text;
         } @catch (NSException *exception) {
-            _purchaseUnitPrice.text = exception.reason;
+            _orderPrice.text = exception.reason;
         }
         
         @try{
-            purchaseEvent.quantity = _purchaseQuantity.text;
+            purchaseEvent.purchaseType = _purchaseType.text;
         }@catch (NSException *exception) {
-            _purchaseQuantity.text = exception.reason;
+            _purchaseType.text = exception.reason;
         }
-        @try{
-            purchaseEvent.revenue = _purchaseRevenue.text;
-        }@catch (NSException *exception) {
-            _purchaseRevenue.text = exception.reason;
-        }
+        
         
         purchaseEvent.currecyCode = [currencyArray objectAtIndex:[_purchaseCurrencyPicker selectedRowInComponent:0]];
+        
+        Product* product = [[Product alloc] init];
+        product.productId = @"p_0344411&*#$^";
+        product.productPrice = @"20000";
+        product.productQuantity = @"3";
+        [purchaseEvent addProduct:product];
+        
+        
+        Product* product2 = [[Product alloc] init];
+        product2.productId = @"p_0344412양";
+        product2.productPrice = @"10000";
+        product2.productQuantity = @"13";
+        
+        [purchaseEvent addProduct:product2];
         
         [CaulyTracker trackDefinedEvent:purchaseEvent];
         

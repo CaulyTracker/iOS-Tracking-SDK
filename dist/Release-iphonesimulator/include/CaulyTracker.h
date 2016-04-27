@@ -24,6 +24,7 @@
 +(void) trackEvent:(NSString*) eventName eventParam:(NSString*)eventParam;
 +(void) trackEvent:(NSString*) eventName caulyTrackerEvent:(CaulyTrackerEvent*) caulyTrackerEvent;
 +(void) trackDefinedEvent:(CaulyDefinedEvent*) definedEvent;
++(void) traceDeepLink:(NSURL*) url;
 +(NSString*) setJSInterface:(UIWebView*)webView;
 +(NSString*) callJSInterface:(UIWebView*) webView request:(NSURLRequest *)request;
 @end

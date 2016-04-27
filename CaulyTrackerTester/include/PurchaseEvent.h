@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "TrackerConst.h"
 #import "CaulyDefinedEvent.h"
+#import "Product.h"
 
 
 @interface PurchaseEvent : CaulyDefinedEvent
 
-@property NSString* productName;
-@property (nonatomic, setter=setUnitPrice:) NSString* unitPrice;
-@property (nonatomic, setter=setQuantity:) NSString* quantity;
-@property (nonatomic, setter=setRevenue:) NSString* revenue;
+@property (nonatomic) NSString* orderId;
+@property (nonatomic) NSString* orderPrice;
+@property (nonatomic) NSString* purchaseType;
+@property (nonatomic) NSMutableArray* productInfos;
 @property NSString* currecyCode;
 
+-(void) addProduct:(Product*) product;
 @end

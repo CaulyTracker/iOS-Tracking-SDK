@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-# define CAULY_SDK_VERSION (@"1.0.0")
+# define CAULY_SDK_VERSION (@"1.0.2")
 // Log 레벨
 
 static NSString* CURRENCY_KRW = @"KRW";

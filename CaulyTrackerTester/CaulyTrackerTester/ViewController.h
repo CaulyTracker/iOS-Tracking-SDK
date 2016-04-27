@@ -19,10 +19,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendSingleEvent;
 
 
-@property (weak, nonatomic) IBOutlet UITextField *purchaseProductName;
-@property (weak, nonatomic) IBOutlet UITextField *purchaseUnitPrice;
-@property (weak, nonatomic) IBOutlet UITextField *purchaseQuantity;
-@property (weak, nonatomic) IBOutlet UITextField *purchaseRevenue;
+@property (weak, nonatomic) IBOutlet UITextField *orderId;
+@property (weak, nonatomic) IBOutlet UITextField *orderPrice;
+@property (weak, nonatomic) IBOutlet UITextField *purchaseType;
+
 @property (weak, nonatomic) IBOutlet UIButton *sendPurchaseEvent;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *purchaseCurrencyPicker;
@@ -30,4 +30,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnWebTest;
 
 @end
+
 
