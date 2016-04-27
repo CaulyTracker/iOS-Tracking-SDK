@@ -40,6 +40,23 @@ Cauly 리타겟팅 iOS 연동 가이드
 // 아래 NSURL 로 DeekLink 가 들어오면 
 // NSURL *deepLinkStr; // example) "someapp://app/?cauly_rt_code=1234&cauly_egmt_sec=8600"; 
 [CaulyTracker traceDeepLink:deepLinkStr];
+
+```
+
+```objectivec
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
+    [CaulyTracker traceDeepLink:url];
+    if([[url host] isEqualToString:@"caulytrackertest.com"]){
+       ...
+        
+       return YES;
+    }
+    else{
+        return NO;
+    }
+}
+
 ```
 
 #### Event 전송
