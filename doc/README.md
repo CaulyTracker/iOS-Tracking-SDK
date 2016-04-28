@@ -66,3 +66,29 @@ NSString productId = @"987654321"; // 광고주의 product id 를 987654321 라 
 ```objc
 [CaulyTracker trackEvent:@"CA_APPLY"];
 ```
+
+##### Purchase 이벤트
+```objc
+// 유저가 구매한 20000원짜리 (product id "987654321") 3개와 10000원짜리 (product id "887654321") 1개를 샀고,
+// 그래서 총 구매액은 70000원이고,
+// 광고주가 발급한 구매 id(order id) 가 "order_20160430" 라고 가정하면,
+PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
+purchaseEvent.orderId = @"order_20160430";
+purchaseEvent.orderPrice = @"70000";
+purchaseEvent.currecyCode = @"KRW";
+
+Product* product = [[Product alloc] init];
+product.productId = @"987654321";
+product.productPrice = @"20000";
+product.productQuantity = @"3";
+[purchaseEvent addProduct:product];
+
+Product* product2 = [[Product alloc] init];
+product2.productId = @"887654321";
+product2.productPrice = @"10000";
+product2.productQuantity = @"1";
+[purchaseEvent addProduct:product2];
+
+[CaulyTracker trackDefinedEvent:purchaseEvent];
+```
+상세 설명: https://github.com/CaulyTracker/iOS-Tracking-SDK#purchase
