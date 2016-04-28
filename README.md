@@ -216,7 +216,6 @@ caulyTrackerEvent.param4 = @"param4_value";
 PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
 purchaseEvent.orderId = @"order_20160430";
 purchaseEvent.orderPrice = @"70000";
-purchaseEvent.purchaseType = @"RE-PURCHASE";
 purchaseEvent.currecyCode = @"KRW";
 
 Product* product = [[Product alloc] init];
