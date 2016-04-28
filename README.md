@@ -130,7 +130,8 @@ CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경�
 ### Install check
 최초 Application 실행시 Install 여부를 tracking 합니다.
 Install Check는 앱의 최초 실행시에만 tracking 됩니다.
-```
+
+```objectivec
 #import "CaulyTracker.h"
 ...
 @implementation AppDelegate
@@ -151,7 +152,8 @@ Install Check는 앱의 최초 실행시에만 tracking 됩니다.
 사용자의 앱에서의 Activity가 시작/종료 되는 시점에 호출합니다.
 AppDelegate.m 파일의 Active/Terminate에 대한 Delegation이되는 시점에 호출하는 것을 권장합니다.
 #### Sample
-```
+
+```objectivec
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [CaulyTracker startSession];
 }
@@ -176,14 +178,18 @@ Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 �
 | event_param | optional | 세부 정보 등 이벤트에 추가적으로 기입할 값 |
 
 ##### Name Only
-``` [CaulyTracker trackEvent:@"SAMPLE_EVENT_1"]; ``` 
+```objectivec 
+[CaulyTracker trackEvent:@"SAMPLE_EVENT_1"]; 
+``` 
 
 ##### name / single param
- ``` [CaulyTracker trackEvent:@"SAMPLE_EVENT_2" eventParam:@"MessageSent"]; ```  
+ ```objectivec
+[CaulyTracker trackEvent:@"SAMPLE_EVENT_2" eventParam:@"MessageSent"]; 
+```  
 
 ##### name / given parameters
 
-``` 
+```objectivec
 CaulyTrackerEvent* caulyTrackerEvent = [[CaulyTrackerEvent alloc] init];
 caulyTrackerEvent.param1 = @"param1_value";
 caulyTrackerEvent.param2 = @"param2_value";
@@ -235,7 +241,8 @@ Cauly JS Interface For UIWebview
 ---------------------------------
 ### Inject javascript interface
 WebView 의 Load가 끝나는 시점에 JavaScript Interface 를 등록합니다.
-```
+
+```objectivec
 #pragma mark - UIWebViewDelegate
 ...
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -267,7 +274,7 @@ if(window.caulyJSInterface.platform() == 'Android'){
 Apple OS에서 제공하는 Identity For Advertising (IDFA)를 Javascript에서 사용할 수 있습니다.
 2가지 방식으로 구현할 수 있습니다.
 
-```
+```javascript
 <script type="text/javascript">
 // Return 방식
 function getAdid() {
