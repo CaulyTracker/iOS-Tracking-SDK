@@ -10,7 +10,7 @@ CAULY Tracking iOS SDK
  ---------- | ------------- | ------------
 | 1.0.0 	| 2015.12.09	| 권대화(neilkwon@fsn.co.kr) - 초안작성 |
 | 1.0.1 	| 2016.04.07	| 권대화(neilkwon@fsn.co.kr) - 업데이트 사항 반영 |
-
+| 1.0.2 	| 2016.04.28	| 권대화(neilkwon@fsn.co.kr) - 업데이트 사항 반영 |
 
 ----------
 
@@ -29,10 +29,12 @@ CAULY Tracking iOS SDK
 	  	- [Session Start / Close](#session-start--close)
 	  		- Sample
 	  	- [Event](#event)
-	   		- Custom Event
-	    			- Name Only
-	    			- name / single param
-	    			- name / given parameters
+	   		- [Custom Event](#custom-event)
+				- Name Only
+				- name / single param
+				- name / given parameters
+   			- [Defined Event](#defined-event)
+	   			- Purchase
  	- [Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview)
   		- Inject javascript interface
   		- Get Platform String
@@ -54,7 +56,9 @@ SDK 적용
 -------------
 
 ### Xcode Project Setting
-Xcode 프로젝트의 info.plist 에 Cauly 에서 발급받은 track code를 추가합니다.
+info.plist 파일에 아래의 CaulyTrackCode를 key로  발급받은 track_code를 삽입합니다.
+예시의 '[CAULY_TRACK_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
+
 #### info.plist
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -68,30 +72,36 @@ Xcode 프로젝트의 info.plist 에 Cauly 에서 발급받은 track code를 추
 ```
 #### Static Library Import
 CaulyTracker의 Header 파일과 .so 파일을 프로젝트에 import 합니다.
-```<objective-c>
+
+```
 include/
 	CaulyDefinedEvent.h
 	CaulyTracker.h
 	CaulyTrackerEvent.h
 	PurchaseEvent.h
 	TrackerConst.h
+	Product.h
 
 libCaulyTracker.so
 ```
 #### Depedency
 의존성이 있는 Framework을 Build Phases > Link Binary With Libraries 에 추가합니다.
+
 ```
 AdSupport.framework
 SystemConfiguration.framework
-libCaulyTracker.so
 ```
 
 ### Cauly Tracker 초기화
-| Method | mandatory | Description |
+Tracker를 사용하고자 하는 View 또는 Source에서 아래와 같이 정보를 입력합니다.
+각 정보는 해당하는 정보를 세팅할 수 있는 타이밍에 호출하면 됩니다.
+
+| Function | Required | Description |
 | --------- | ------------- | ------------- |
 | setUserId | optional | 각 서비스를 사용하는 사용자의 고유 ID |
-| setAge | optional | 사용자의 연령<br>연령 정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
+| setAge | optional | 사용자의 연령연령<br>정보를 추가하면 더욱 세밀한 분석이 가능합니다.|
 | setGender | optional | 사용자의 성별<br>성별 정보를 추가하면 더욱 세밀한 분석이 가능합니다. |
+
 
 ```objectivec
 #import "CaulyTracker.h"
@@ -103,14 +113,15 @@ libCaulyTracker.so
 
 	[CaulyTracker setAge:@"20"];
 	[CaulyTracker setGender:CaulyGender_Male];
-	[CaulyTracker setUserId:@"TestUserId_20151201"];
+	[CaulyTracker setUserId:@"UserId_20151201"];
 	...
 }
 ```
+
 ----------
 
 ###  Webview를 사용하는 Hybrid App 참고사항
-CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경우 App/Web의 더욱 정교한 Tracking 기능을 사용하고자 할 경우에는 [<i class="icon-file"></i> Cauly JS Interface For UIWebview](#CaulyJSInterfaceForUIWebview) section을 참조해주세요.
+CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경우 App/Web의 더욱 정교한 Tracking 기능을 사용하고자 할 경우에는 [<i class="icon-file"></i> Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview) section을 참조해주세요.
 > UIWebView를 사용하는 Hybrid App이 아닌 일반 브라우저에서 접근가능한 Web의 경우에는 해당 메시지를 호출하지 않도록 조치를 해주어야 합니다.
 
 
@@ -133,7 +144,9 @@ Install Check는 앱의 최초 실행시에만 tracking 됩니다.
 }
 ...
 ```
+
 ----------
+
 ### Session Start / Close
 사용자의 앱에서의 Activity가 시작/종료 되는 시점에 호출합니다.
 AppDelegate.m 파일의 Active/Terminate에 대한 Delegation이되는 시점에 호출하는 것을 권장합니다.
@@ -148,9 +161,12 @@ AppDelegate.m 파일의 Active/Terminate에 대한 Delegation이되는 시점에
     [self saveContext];
 }
 ```
+
 ----------
+
 ### Event
 사용자 또는 System에서 발생하는 Event를 Tracking 합니다.
+
 #### Custom Event
 Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 세팅가능합니다.
 
@@ -159,7 +175,6 @@ Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 �
 | event_name | mandatory | 트래킹할 이벤트명 |
 | event_param | optional | 세부 정보 등 이벤트에 추가적으로 기입할 값 |
 
-
 ##### Name Only
 ``` [CaulyTracker trackEvent:@"SAMPLE_EVENT_1"]; ``` 
 
@@ -167,6 +182,7 @@ Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 �
  ``` [CaulyTracker trackEvent:@"SAMPLE_EVENT_2" eventParam:@"MessageSent"]; ```  
 
 ##### name / given parameters
+
 ``` 
 CaulyTrackerEvent* caulyTrackerEvent = [[CaulyTrackerEvent alloc] init];
 caulyTrackerEvent.param1 = @"param1_value";
@@ -174,6 +190,43 @@ caulyTrackerEvent.param2 = @"param2_value";
 caulyTrackerEvent.param4 = @"param3_value";
 caulyTrackerEvent.param4 = @"param4_value";
 [CaulyTracker trackEvent:@"SAMPLE_EVENT_4" caulyTrackerEvent:caulyTrackerEvent];
+```
+
+#### Defined Event
+자주 사용되거나 또는 중요하다 판단되는 Event에 대한 선정의된 Event입니다.
+
+##### Purchase
+구매 또는 지불이 발생하였을때 호출
+
+| Parameter | Type |Required | Default | Description |
+| --------- | ---- | ------- | ------- | ----------- |
+| order_id | String | mandatory | - | Order ID |
+| order_price | String | mandatory | - | 발생한 전체 금액 |
+| purchase_type | String | optional | - | 구매의 성격<br>eg)재구매 : RE-PURCHASE |
+| product_infos | List<Product> | mandatory | - | 구매된 상품의 상세 정보 목록<br>최소 1개 이상 상품이 등록되어야 합니다. |
+| currency_code | String | optional | KRW | 통화 코드 |
+
+```objectivec
+PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
+purchaseEvent.orderId = @"order_20160430";
+purchaseEvent.orderPrice = @"70000";
+purchaseEvent.purchaseType = @"RE-PURCHASE";
+purchaseEvent.currecyCode = @"KRW";
+
+Product* product = [[Product alloc] init];
+product.productId = @"p_0344411";
+product.productPrice = @"20000";
+product.productQuantity = @"3";
+[purchaseEvent addProduct:product];
+
+Product* product2 = [[Product alloc] init];
+product2.productId = @"p_0344412";
+product2.productPrice = @"10000";
+product2.productQuantity = @"1";
+[purchaseEvent addProduct:product2];
+
+[CaulyTracker trackDefinedEvent:purchaseEvent];
+
 ```
 
 --------------
