@@ -92,3 +92,29 @@ product2.productQuantity = @"1";
 [CaulyTracker trackDefinedEvent:purchaseEvent];
 ```
 상세 설명: https://github.com/CaulyTracker/iOS-Tracking-SDK#purchase
+
+##### Re-Purchase 이벤트
+```objc
+PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
+purchaseEvent.orderId = @"order_20160430";
+purchaseEvent.orderPrice = @"70000";
+purchaseEvent.currecyCode = @"KRW";
+
+// 아래 한 줄을 추가합니다
+purchaseEvent.purchaseType = @"RE-PURCHASE";
+// 한 줄 추가 끝
+
+Product* product = [[Product alloc] init];
+product.productId = @"987654321";
+product.productPrice = @"20000";
+product.productQuantity = @"3";
+[purchaseEvent addProduct:product];
+
+Product* product2 = [[Product alloc] init];
+product2.productId = @"887654321";
+product2.productPrice = @"10000";
+product2.productQuantity = @"1";
+[purchaseEvent addProduct:product2];
+
+[CaulyTracker trackDefinedEvent:purchaseEvent];
+```
