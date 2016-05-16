@@ -77,6 +77,7 @@
 		2824F12C1C17D95500B6A20D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		28A1C5671C185490004F859D /* libCaulyTracker-universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libCaulyTracker-universal.a"; sourceTree = "<group>"; };
 		28CA2D7F1CCDB85E009AB7AD /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		28DC3DFF1CE2FF2500B368B5 /* ContentViewEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewEvent.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +186,7 @@
 		2824F0FE1C151AA700B6A20D /* include */ = {
 			isa = PBXGroup;
 			children = (
+				28DC3DFF1CE2FF2500B368B5 /* ContentViewEvent.h */,
 				28CA2D7F1CCDB85E009AB7AD /* Product.h */,
 				2808F3451C1AD10400F8A684 /* CaulyDefinedEvent.h */,
 				2808F3461C1AD10400F8A684 /* CaulyTracker.h */,

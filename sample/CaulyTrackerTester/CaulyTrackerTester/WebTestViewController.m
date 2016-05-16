@@ -22,8 +22,7 @@
     
     [CaulyTracker trackEvent:@"test"];
     
-//    NSString* url = @"http://image.cauly.co.kr/richad/test/changju/stage/tracker/CaulyTrackingSample.html";
-    NSString* url = @"http://image.cauly.co.kr/richad/test/changju/tracker/initadid/CaulyTrackingSample.html";
+    NSString* url = @"http://image.cauly.co.kr/richad/test/caulytracker/tracker_interface.html";
     
 #if TARGET_IPHONE_SIMULATOR
 
