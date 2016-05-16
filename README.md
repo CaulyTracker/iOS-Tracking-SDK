@@ -11,7 +11,7 @@ CAULY Tracking iOS SDK
 | 1.0.0 	| 2015.12.09	| 권대화(neilkwon@fsn.co.kr) - 초안작성 |
 | 1.0.1 	| 2016.04.07	| 권대화(neilkwon@fsn.co.kr) - 업데이트 사항 반영 |
 | 1.0.2 	| 2016.04.28	| 권대화(neilkwon@fsn.co.kr) - 업데이트 사항 반영 |
-
+| 1.0.3 	| 2016.05.1	| 권대화(neilkwon at fsn.co.kr) - 업데이트 내역(Purchase / ContentView(Product) Event 추가) |
 ----------
 
 ### Table of contents
@@ -35,6 +35,7 @@ CAULY Tracking iOS SDK
 				- name / given parameters
    			- [Defined Event](#defined-event)
 	   			- Purchase
+	   			- ContentView(Product)
  	- [Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview)
   		- Inject javascript interface
   		- Get Platform String
@@ -77,10 +78,10 @@ CaulyTracker의 Header 파일과 .so 파일을 프로젝트에 import 합니다.
 include/
 	CaulyDefinedEvent.h
 	CaulyTracker.h
-	CaulyTrackerEvent.h
-	PurchaseEvent.h
+	ContentViewEvent.h
 	TrackerConst.h
 	Product.h
+	PurchaseEvent.h
 
 libCaulyTracker.so
 ```
@@ -187,17 +188,6 @@ Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 �
 [CaulyTracker trackEvent:@"SAMPLE_EVENT_2" eventParam:@"MessageSent"]; 
 ```  
 
-##### name / given parameters
-
-```objectivec
-CaulyTrackerEvent* caulyTrackerEvent = [[CaulyTrackerEvent alloc] init];
-caulyTrackerEvent.param1 = @"param1_value";
-caulyTrackerEvent.param2 = @"param2_value";
-caulyTrackerEvent.param4 = @"param3_value";
-caulyTrackerEvent.param4 = @"param4_value";
-[CaulyTracker trackEvent:@"SAMPLE_EVENT_4" caulyTrackerEvent:caulyTrackerEvent];
-```
-
 #### Defined Event
 자주 사용되거나 또는 중요하다 판단되는 Event에 대한 선정의된 Event입니다.
 
@@ -233,7 +223,8 @@ product2.productQuantity = @"1";
 [CaulyTracker trackDefinedEvent:purchaseEvent];
 
 ```
-
+##### ContentView(Product)
+Content에 대한 트래킹
 --------------
 
 Cauly JS Interface For UIWebview
