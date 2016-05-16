@@ -32,7 +32,6 @@ CAULY Tracking iOS SDK
 	   		- [Custom Event](#custom-event)
 				- Name Only
 				- name / single param
-				- name / given parameters
    			- [Defined Event](#defined-event)
 	   			- Purchase
 	   			- ContentView(Product)
@@ -264,18 +263,23 @@ if(window.caulyJSInterface.platform() == 'Android'){
 Apple OS에서 제공하는 Identity For Advertising (IDFA)를 Javascript에서 사용할 수 있습니다.
 2가지 방식으로 구현할 수 있습니다.
 
+!! Return 방식은 caulyJSInterface Object가 set되기 까지 딜레이가 있을 수 있습니다.
+<br>window.setTimeout을 통해 약 50msec 정도 후에 사용하는 것을 권장합니다.
+
 ```javascript
 <script type="text/javascript">
 // Return 방식
 function getAdid() {
-	if (window.caulyJSInterface) {
-		var adid = window.caulyJSInterface.getAdId();
-		if (caulyJSInterface.platform() == 'iOS') {
-			$('#idfa').val(adid);
-		} else {
-			$('#gaid').val(adid);
+	window.setTimeout(function(){
+		if (window.caulyJSInterface) {
+			var adid = window.caulyJSInterface.getAdId();
+			if (caulyJSInterface.platform() == 'iOS') {
+				$('#idfa').val(adid);
+			} else {
+				$('#gaid').val(adid);
+			}
 		}
-	}
+	},50);
 }
 
 //Callback 방식
