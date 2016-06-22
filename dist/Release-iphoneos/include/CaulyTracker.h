@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "TrackerConst.h"
 #import "CaulyDefinedEvent.h"
-#import "CaulyTrackerEvent.h"
 #import <UIKit/UIKit.h>
 
 @interface CaulyTracker : NSObject

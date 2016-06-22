@@ -11,7 +11,6 @@
 #import "Product.h"
 #import "PurchaseEvent.h"
 #import "ContentViewEvent.h"
-#import "CaulyTrackerEvent.h"
 #import "WebTestViewController.h"
 
 @interface ViewController ()
