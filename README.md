@@ -11,7 +11,8 @@ CAULY Tracking iOS SDK
 | 1.0.0 	| 2015.12.09	| 권대화(neilkwon@fsn.co.kr) - 초안작성 |
 | 1.0.1 	| 2016.04.07	| 권대화(neilkwon@fsn.co.kr) - 업데이트 사항 반영 |
 | 1.0.2 	| 2016.04.28	| 권대화(neilkwon@fsn.co.kr) - 업데이트 사항 반영 |
-| 1.0.3 	| 2016.05.1	| 권대화(neilkwon at fsn.co.kr) - 업데이트 내역(Purchase / ContentView(Product) Event 추가) |
+| 1.0.3 	| 2016.05.01	| 권대화(neilkwon at fsn.co.kr) - 업데이트 내역(Purchase / ContentView(Product) Event 추가)
+| 1.0.4 	| 2016.06.22	| 권대화(neilkwon at fsn.co.kr) - 업데이트 내역(BITCODE 관련/미사용 파일 삭제)|
 ----------
 
 ### Table of contents
