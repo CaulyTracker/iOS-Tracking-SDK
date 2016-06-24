@@ -224,8 +224,32 @@ product2.productQuantity = @"1";
 
 ```
 ##### ContentView(Product)
-Content에 대한 트래킹
+Content(Product)에 대한 트래킹 상품의 상세한 정보가 포함된 이벤트입니다.
 
+```objectivec
+ContentViewEvent* contentViewEvent = [[ContentViewEvent alloc] initWithItemId:@"test_item_1"];
+contentViewEvent.itemName = @"[오늘의 특가] 카울리 반창고!";
+contentViewEvent.itemImage = @"https://www.cauly.net/images/logo_cauly_main.png";
+contentViewEvent.itemUrl = @"caulytrackertest://caulytracker.com/product?item_id=p20160510_test_1";
+contentViewEvent.originalPrice = @"24000";
+contentViewEvent.salePrice = @"18000";
+contentViewEvent.category1 = @"생활물품";
+contentViewEvent.category2 = @"구급";
+
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameCategory3 value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameCategory4 value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameCategory5 value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameRegDate value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameUpdateDate value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameExpireDate value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameStock value:@"10"];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameState value:@"available"];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameDescription value:@" 한번 사용하면 멈출 수 없는 쫄깃함 !"];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameExtraImage value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameLocale value:@"KRW"];
+
+[CaulyTracker trackDefinedEvent:contentViewEvent];
+```
 --------------
 
 Cauly JS Interface For UIWebview
