@@ -56,6 +56,9 @@ CAULY Tracking iOS SDK
 SDK 적용
 -------------
 
+### 대상 OS 버전
+iOS 7.1 이상
+
 ### Xcode Project Setting
 info.plist 파일에 아래의 CaulyTrackCode를 key로  발급받은 track_code를 삽입합니다.
 예시의 '[CAULY_TRACK_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
