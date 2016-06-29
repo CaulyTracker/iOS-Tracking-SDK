@@ -39,7 +39,9 @@ Cauly 리타겟팅 iOS 연동 가이드
 ```objectivec
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     
+    // 앱이 실행된 직후 설정
     [CaulyTracker traceDeepLink:url];
+    // 이후 개별 로직 실행
     if([[url host] isEqualToString:@"caulytrackertest.com"]){
        ...
         
