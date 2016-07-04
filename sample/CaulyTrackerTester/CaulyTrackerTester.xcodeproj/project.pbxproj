@@ -46,7 +46,6 @@
 /* Begin PBXFileReference section */
 		2808F3451C1AD10400F8A684 /* CaulyDefinedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaulyDefinedEvent.h; sourceTree = "<group>"; };
 		2808F3461C1AD10400F8A684 /* CaulyTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaulyTracker.h; sourceTree = "<group>"; };
-		2808F3471C1AD10400F8A684 /* CaulyTrackerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaulyTrackerEvent.h; sourceTree = "<group>"; };
 		2808F3481C1AD10400F8A684 /* PurchaseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseEvent.h; sourceTree = "<group>"; };
 		2808F3491C1AD10400F8A684 /* TrackerConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackerConst.h; sourceTree = "<group>"; };
 		2824F0C51C151A1C00B6A20D /* CaulyTrackerTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CaulyTrackerTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,7 +189,6 @@
 				28CA2D7F1CCDB85E009AB7AD /* Product.h */,
 				2808F3451C1AD10400F8A684 /* CaulyDefinedEvent.h */,
 				2808F3461C1AD10400F8A684 /* CaulyTracker.h */,
-				2808F3471C1AD10400F8A684 /* CaulyTrackerEvent.h */,
 				2808F3481C1AD10400F8A684 /* PurchaseEvent.h */,
 				2808F3491C1AD10400F8A684 /* TrackerConst.h */,
 			);
@@ -477,7 +475,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = CaulyTrackerTester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -496,7 +494,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = CaulyTrackerTester/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
