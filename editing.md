@@ -1,11 +1,11 @@
-CAULY Tracking iOS SDK
-===================
+Cauly 리타겟팅 연동 가이드
+=========================
+iOS Native APP
+--------------------------
+### 개요
+네이티브 앱은 obj-c 로 작성된 일반적인 iOS 앱을 지칭합니다. 본 문서는 광고주의 앱이 네이티브 앱일 경우 리타겟팅 연동을 하는 방법에 대해서 설명하는 문서입니다. 컨텐츠 제공에 Webview 를 주로 사용한다면 [iOS Hybrid APP](https://github.com/CaulyTracker/iOS-Tracking-SDK-Hybrid) 문서를 참고해주세요. 
 
-본 문서는  애드 네트워크 파트너 혹은 광고주가 SDK API를 통해 타게팅을 위한 정보를 제공 연동 규격을 정의합니다.
-
-----------
-
-
+### 문서 버전 
 |문서 버전	| 작성 날짜 		| 작성자 및 내용 |
  ---------- | ------------- | ------------
 | 1.0.0 	| 2015.12.09	| 권대화(neilkwon@fsn.co.kr) - 초안작성 |
@@ -15,6 +15,41 @@ CAULY Tracking iOS SDK
 | 1.0.4 	| 2016.06.22	| 권대화(neilkwon@fsn.co.kr) - 업데이트 내역(BITCODE 관련/미사용 파일 삭제) |
 | 1.0.5 	| 2016.07.04	| 권대화(neilkwon@fsn.co.kr) - 정밀성을 위한 추가 정보 전송 |
 ----------
+
+### 목차
+- [연동 절차](#연동-절차)
+- [연동 상세](#연동-상세)
+  - [Native APP SDK 연동](#native-app-sdk-연동)
+  - [Deep Link 처리 (해당시에만)](#deeplink-처리-해당시에만)
+  - [Event 처리](#event-처리)
+  - [Reference](#reference)
+
+--------------------------
+
+### 연동 절차
+
+1. Cauly 담당자 혹은 fsn_rt@fsn.co.kr로 연락하여 Cauly 리타겟팅 연동에 대해서 협의합니다.
+1. 협의 완료 후, Cauly 담당자를 통해 track_code를 발급받습니다.
+1. track_code 를 포함한 tracker 코드를 아래 ‘연동상세’을 참고하여 해당하는 부분에 해당하는 곳에 삽입합니다.
+1. 코드 삽입 이후 연동이 되었는지 Cauly에게 테스트를 요청합니다.
+1. Cauly에서 테스트를 완료하면 APP을 마켓에 업데이트하고 업데이트 내용을 Cauly와 공유합니다.
+1. 마켓 업데이트 완료 후 7일 뒤 (주말 및 공휴일 포함) 광고 라이브 가능합니다. (단, 모수가 너무 적을 경우 모수 수집을 위해 추가 시간이 소요될 수 있습니다.)
+
+### 연동 상세
+------------
+#### Native APP SDK 연동
+
+| 항목 | 세부항목 | 목적 | 연동 가이드 |
+| ---------- | -------------- | ----------- | --------------- |
+| Setting | info.plist |  | [Infoplist 부분 참고](#infoplist) |
+|  | Library Import – header, .so 추가 |  | [Static-library-import 부분 참고](#static-library-import) |
+|  | Framework 추가 |  | [dependency 부분 참고](#depedency) |
+| | AndroidManifest.xml – track_code 추가 | track_code 추가 | [Initialize 부분 참고](#initialize) |
+| Setting & Code | | | [Cauly tracker 초기화” 부분 참고](#cauly-tracker-초기화) |
+| 초기화 Code | Session | 앱 실행 측정 | [Session 부분 참고](#session-start--close) |
+
+
+
 
 ### Table of contents
 
