@@ -45,7 +45,7 @@ iOS Native APP
 | Setting | info.plist |  | [Infoplist 부분 참고](#infoplist) |
 |  | Library Import – header, .so 추가 |  | [Static-library-import 부분 참고](#static-library-import) |
 |  | Framework 추가 |  | [dependency 부분 참고](#depedency) |
-| 초기화 | | | [Cauly tracker 초기화” 부분 참고](#cauly-tracker-초기화) |
+| 초기화 | | | [Cauly tracker 초기화 부분 참고](#cauly-tracker-초기화) |
 | Session | Session | | [Session 부분 참고](#session-start--close) |
 
 ##### info.plist
