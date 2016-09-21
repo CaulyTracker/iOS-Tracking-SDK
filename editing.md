@@ -38,68 +38,19 @@ iOS Native APP
 ### 연동 상세
 ------------
 #### Native APP SDK 연동
+대상 OS 버전: iOS 7.1 이상
 
 | 항목 | 세부항목 | 목적 | 연동 가이드 |
 | ---------- | -------------- | ----------- | --------------- |
 | Setting | info.plist |  | [Infoplist 부분 참고](#infoplist) |
 |  | Library Import – header, .so 추가 |  | [Static-library-import 부분 참고](#static-library-import) |
 |  | Framework 추가 |  | [dependency 부분 참고](#depedency) |
-| | AndroidManifest.xml – track_code 추가 | track_code 추가 | [Initialize 부분 참고](#initialize) |
-| Setting & Code | | | [Cauly tracker 초기화” 부분 참고](#cauly-tracker-초기화) |
-| 초기화 Code | Session | 앱 실행 측정 | [Session 부분 참고](#session-start--close) |
+| 초기화 | | | [Cauly tracker 초기화” 부분 참고](#cauly-tracker-초기화) |
+| Session | Session | | [Session 부분 참고](#session-start--close) |
 
-
-
-
-### Table of contents
-
-- CAULY Tracking iOS SDK
-	- [연동 절차](#연동-절차)
- 	- [SDK 적용](#sdk-적용)
-	  	- [Xcode Project Setting](#xcode-project-setting)
-	   		- info.plist
-			- Static Library Import
-	   		- Depedency
-	  	- [Cauly Tracker 초기화](#cauly-tracker-초기화)
-	  	- [Webview를 사용하는 Hybrid App 참고사항](#webview를-사용하는-hybrid-app-참고사항)
-	  	- [Install check](#install-check)
-	  	- [Session Start / Close](#session-start--close)
-	  		- Sample
-	  	- [Event](#event)
-	   		- [Custom Event](#custom-event)
-				- Name Only
-				- name / single param
-   			- [Defined Event](#defined-event)
-	   			- Purchase
-	   			- ContentView(Product)
- 	- [Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview)
-  		- Inject javascript interface
-  		- Get Platform String
-   			- sample
-  		- Get ADID
-
-
-----------
-
-연동 절차
--------------
-
- 1. 카울리 담당자 혹은 cauly@fsn.co.kr로 연락하여 트래킹 연동 광고주 파트너로 Track Code 발급을 요청하고 수신 합니다.
- 2. SDK 적용법을 참고하여 구현하고 검증합니다.
- 3. 카울리 담당자에게 SDK가 적용된 APK 파일을 전달 후 검증을 진행합니다.
-검증 완료 후 배포 합니다. 
-
-SDK 적용
--------------
-
-### 대상 OS 버전
-iOS 7.1 이상
-
-### Xcode Project Setting
+##### info.plist
 info.plist 파일에 아래의 CaulyTrackCode를 key로  발급받은 track_code를 삽입합니다.
 예시의 '[CAULY_TRACK_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
-
-#### info.plist
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 ...
@@ -110,7 +61,7 @@ info.plist 파일에 아래의 CaulyTrackCode를 key로  발급받은 track_code
 ...
 </dict>
 ```
-#### Static Library Import
+##### Static Library Import
 CaulyTracker의 Header 파일과 .so 파일을 프로젝트에 import 합니다.
 
 ```
@@ -124,7 +75,7 @@ include/
 
 libCaulyTracker.so
 ```
-#### Depedency
+##### Depedency
 의존성이 있는 Framework을 Build Phases > Link Binary With Libraries 에 추가합니다.
 
 ```
@@ -132,7 +83,7 @@ AdSupport.framework
 SystemConfiguration.framework
 ```
 
-### Cauly Tracker 초기화
+##### Cauly Tracker 초기화
 Tracker를 사용하고자 하는 View 또는 Source에서 아래와 같이 정보를 입력합니다.
 각 정보는 해당하는 정보를 세팅할 수 있는 타이밍에 호출하면 됩니다.
 
@@ -158,16 +109,165 @@ Tracker를 사용하고자 하는 View 또는 Source에서 아래와 같이 정�
 }
 ```
 
-----------
+##### Session Start / Close
+사용자의 앱에서의 Activity가 시작/종료 되는 시점에 호출합니다.
+AppDelegate.m 파일의 Active/Terminate에 대한 Delegation이되는 시점에 호출하는 것을 권장합니다.
 
-###  Webview를 사용하는 Hybrid App 참고사항
+```objectivec
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [CaulyTracker startSession];
+}
+...
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [CaulyTracker closeSession];
+    [self saveContext];
+}
+```
+
+#### DeepLink 처리 (해당시에만)
+광고주의 APP이 Deep Link를 지원하여 유저가 광고를 클릭 했을 때 랜딩하는 위치가 APP의 메인 페이지가 아닌 다른 특정 페이지 (또는 상품상세페이지)인 경우에만 해당되는 사항입니다. 해당사항이 없을 경우 Event 처리 단계로 넘어갑니다.
+```objectivec
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+
+    // 앱이 실행된 직후 설정
+    [CaulyTracker traceDeepLink:url];
+    // 이후 개별 로직 실행
+    if([[url host] isEqualToString:@"caulytrackertest.com"]){
+       ...
+
+       return YES;
+    }
+    else{
+        return NO;
+    }
+}
+```
+
+#### Event 처리
+아래 2가지 캠페인 중 집행 예정인 캠페인에 맞게 code 를 삽입합니다.
+- [A. Feed 캠페인](#a-feed-캠페인)
+- [B. Static 캠페인](#b-static 켐페인)
+
+#### A.	Feed 캠페인
+| 이벤트명 | 목적 | 연동 가이드 |
+| -------- | ----- | --------- |
+| OPEN | - 리타겟팅 광고 노출 대상자 선정 | [OPEN 이벤트](#open-이벤트) |
+| PRODUCT | - 광고노출 대상자 별 추천 상품목록 생성 | [상품 VIEW 이벤트](#상품-view-이벤트) |
+| CONTENT | - 상품이미지 및 상품 상세정보를 광고 소재로 활용 | [ContentView 이벤트](#contentview-이벤트) |
+| PURCHASE | - 추천상품에서 구매상품 제외 처리 <br>- ROAS 측정 | [PURCHASE 이벤트](#purchase-이벤트) |
+| RE-PURCHASE | - 재구매율 측정 (option) | [RE-PURCHASE 이벤트](#re-purchase-이벤트) |
+
+#### B. Static 캠페인
+| 이벤트명 | 목적 | 연동 가이드 |
+| -------- | ----- | --------- |
+| OPEN | - 리타겟팅 광고 노출 대상자 선정 | [OPEN 이벤트](#open-이벤트) |
+| CA_CONVERSION | - 전환 건수 측정 <br>- 예) 상담신청완료 등 | [CONVERSION 이벤트](#conversion-이벤트) |
+
+##### OPEN 이벤트
+```objectivec
+[CaulyTracker trackEvent:@"OPEN"];
+```
+
+##### 상품 view 이벤트
+```objectivec
+NSString productId = @"987654321"; // 광고주의 product id 를 987654321 라 가정하면
+[CaulyTracker trackEvent:@"PRODUCT" eventParam:productId];
+```
+
+##### ContentView 이벤트
+```objectivec
+ContentViewEvent* contentViewEvent = [[ContentViewEvent alloc] initWithItemId:@"test_item_1"];
+contentViewEvent.itemName = @"[오늘의 특가] 카울리 반창고!";
+contentViewEvent.itemImage = @"https://www.cauly.net/images/logo_cauly_main.png";
+contentViewEvent.itemUrl = @"caulytrackertest://caulytracker.com/product?item_id=p20160510_test_1";
+contentViewEvent.originalPrice = @"24000";
+contentViewEvent.salePrice = @"18000";
+contentViewEvent.category1 = @"생활물품";
+contentViewEvent.category2 = @"구급";
+
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameCategory3 value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameCategory4 value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameCategory5 value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameRegDate value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameUpdateDate value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameExpireDate value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameStock value:@"10"];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameState value:@"available"];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameDescription value:@" 한번 사용하면 멈출 수 없는 쫄깃함 !"];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameExtraImage value:@""];
+[contentViewEvent setDetailParam:ContentViewEventDetailParameterNameLocale value:@"KRW"];
+
+[CaulyTracker trackDefinedEvent:contentViewEvent];
+```
+
+##### PURCHASE 이벤트
+```objectivec
+// 유저가 구매한 20000원짜리 (product id "987654321") 3개와 10000원짜리 (product id "887654321") 1개를 샀고,
+// 그래서 총 구매액은 70000원이고,
+// 광고주가 발급한 구매 id(order id) 가 "order_20160430" 라고 가정하면,
+PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
+purchaseEvent.orderId = @"order_20160430";
+purchaseEvent.orderPrice = @"70000";
+purchaseEvent.currecyCode = @"KRW";
+
+Product* product = [[Product alloc] init];
+product.productId = @"987654321";
+product.productPrice = @"20000";
+product.productQuantity = @"3";
+[purchaseEvent addProduct:product];
+
+Product* product2 = [[Product alloc] init];
+product2.productId = @"887654321";
+product2.productPrice = @"10000";
+product2.productQuantity = @"1";
+[purchaseEvent addProduct:product2];
+
+[CaulyTracker trackDefinedEvent:purchaseEvent];
+```
+
+##### Re-Purchase 이벤트
+재구매(첫 구매가 아닌) 유저를 골라서 분류해보고 싶으면 아래처럼 한 줄 추가된 코드를 사용합니다.
+```objectivec
+PurchaseEvent* purchaseEvent = [[PurchaseEvent alloc] init];
+purchaseEvent.orderId = @"order_20160430";
+purchaseEvent.orderPrice = @"70000";
+purchaseEvent.currecyCode = @"KRW";
+
+// 아래 한 줄을 추가합니다
+purchaseEvent.purchaseType = @"RE-PURCHASE";
+// 한 줄 추가 끝
+
+Product* product = [[Product alloc] init];
+product.productId = @"987654321";
+product.productPrice = @"20000";
+product.productQuantity = @"3";
+[purchaseEvent addProduct:product];
+
+Product* product2 = [[Product alloc] init];
+product2.productId = @"887654321";
+product2.productPrice = @"10000";
+product2.productQuantity = @"1";
+[purchaseEvent addProduct:product2];
+
+[CaulyTracker trackDefinedEvent:purchaseEvent];
+```
+
+##### Conversion 이벤트
+```objectivec
+[CaulyTracker trackEvent:@"CA_CONVERSION"];
+```
+
+---------------------
+
+#### Reference
+
+#####  Webview를 사용하는 Hybrid App 참고사항
 CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경우 App/Web의 더욱 정교한 Tracking 기능을 사용하고자 할 경우에는 [<i class="icon-file"></i> Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview) section을 참조해주세요.
 > UIWebView를 사용하는 Hybrid App이 아닌 일반 브라우저에서 접근가능한 Web의 경우에는 해당 메시지를 호출하지 않도록 조치를 해주어야 합니다.
 
-
 ----------
 
-### Install check
+##### Install check
 최초 Application 실행시 Install 여부를 tracking 합니다.
 Install Check는 앱의 최초 실행시에만 tracking 됩니다.
 
@@ -185,31 +285,12 @@ Install Check는 앱의 최초 실행시에만 tracking 됩니다.
 }
 ...
 ```
-
 ----------
 
-### Session Start / Close
-사용자의 앱에서의 Activity가 시작/종료 되는 시점에 호출합니다.
-AppDelegate.m 파일의 Active/Terminate에 대한 Delegation이되는 시점에 호출하는 것을 권장합니다.
-#### Sample
-
-```objectivec
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    [CaulyTracker startSession];
-}
-...
-- (void)applicationWillTerminate:(UIApplication *)application {
-    [CaulyTracker closeSession];
-    [self saveContext];
-}
-```
-
-----------
-
-### Event
+##### Event
 사용자 또는 System에서 발생하는 Event를 Tracking 합니다.
 
-#### Custom Event
+###### Custom Event
 Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 세팅가능합니다.
 
 | Parameter | Required | Description |
@@ -217,20 +298,20 @@ Custom Event를 Tracking 합니다. Event 명과 parameter 모두 자유롭게 �
 | event_name | mandatory | 트래킹할 이벤트명 |
 | event_param | optional | 세부 정보 등 이벤트에 추가적으로 기입할 값 |
 
-##### Name Only
+####### Name Only
 ```objectivec 
 [CaulyTracker trackEvent:@"SAMPLE_EVENT_1"]; 
 ``` 
 
-##### name / single param
+####### name / single param
  ```objectivec
 [CaulyTracker trackEvent:@"SAMPLE_EVENT_2" eventParam:@"MessageSent"]; 
 ```  
 
-#### Defined Event
+###### Defined Event
 자주 사용되거나 또는 중요하다 판단되는 Event에 대한 선정의된 Event입니다.
 
-##### Purchase
+####### Purchase
 구매 또는 지불이 발생하였을때 호출
 
 | Parameter | Type |Required | Default | Description |
@@ -262,7 +343,7 @@ product2.productQuantity = @"1";
 [CaulyTracker trackDefinedEvent:purchaseEvent];
 
 ```
-##### ContentView(Product)
+####### ContentView(Product)
 Content(Product)에 대한 트래킹 상품의 상세한 정보가 포함된 이벤트입니다.
 
 ```objectivec
