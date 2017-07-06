@@ -14,6 +14,7 @@
 @interface CaulyTracker : NSObject
 +(void) testInstallCheck;
 +(void) installCheck;
++(void) useSecureProtocol:(BOOL) flag;
 +(void) setUserId:(NSString*) userId;
 +(void) setAge:(NSString*) age;
 +(void) setGender:(CaulyGender) gender;
