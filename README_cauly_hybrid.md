@@ -60,6 +60,22 @@ SystemConfiguration.framework
 CaulyTracker Web SDK ( javascript version ) 을 사용는 Hybrid의 앱의 경우 App/Web의 더욱 정교한 Tracking 기능을 사용하고자 할 경우에는 [<i class="icon-file"></i> Cauly JS Interface For UIWebview](#cauly-js-interface-for-uiwebview) section을 참조해주세요.
 > UIWebView를 사용하는 Hybrid App이 아닌 일반 브라우저에서 접근가능한 Web의 경우에는 해당 메시지를 호출하지 않도록 조치를 해주어야 합니다.
 
+### Webview Link 클릭시 외부 브라우저 또는 Scheme 실행
+
+
+```objectivec
+#pragma mark - UIWebViewDelegate
+...
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSURL *url = [request URL];
+    if([url.absoluteString rangeOfString:@"click.cauly.co.kr"].location != NSNotFound) {
+        UIApplication *application = [UIApplication sharedApplication];
+        [application openURL:[NSURL URLWithString:url] options:@{} completionHandler:nil];
+    }
+}
+
+...
+```
 
 Cauly JS Interface For UIWebview
 ---------------------------------
