@@ -29,6 +29,19 @@ iOS Native APP
 #### Native APP SDK 연동
 대상 OS 버전: iOS 7.1 이상
 
+##### info.plist
+info.plist 파일에 아래의 CaulyTrackCode를 key로  발급받은 app_code를 삽입합니다.
+예시의 '[APP_CODE]'부분을 변경합니다. ( [] 기호는 불필요 )
+```
+<?xml version="1.0" encoding="UTF-8"?>
+...
+<dict>
+...
+	<key>CaulyTrackCode</key>
+	<string>[APP_CODE]</string>	
+...
+</dict>
+```
 
 ##### Static Library Import
 CaulyTracker의 Header 파일과 .so 파일을 프로젝트에 import 합니다.
